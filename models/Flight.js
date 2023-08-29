@@ -9,6 +9,8 @@ const flightInfoSchema = new mongoose.Schema({
 //applies this schema to the Flight(.js: name of file) model
 const Flight = model('Flight' , flightInfoSchema)
 
+model.exports = Flight;
+
 
 // departs: { type: Date, default: () => new Date(new Date().getFullYear() + 1, 0, 1) },
 
@@ -20,4 +22,4 @@ const Flight = model('Flight' , flightInfoSchema)
 
 // 1: Represents the year. This value adds 1 to the current year, effectively representing the next year.
 
-//this because this data is reading the default from left to right. the last date is the day, the second to last is the month minus 1 (this is computer counting) and the year is first. 
+//this because this data is reading the default from left to right. the last date is the day, the second to last is the month minus 1 (this is computer counting) and the year is first. for example: june 24, 1999 is written as new Date(99, 5, 24) not June 24, 99. 
