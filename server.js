@@ -17,6 +17,9 @@ app.use(express.urlencoded({extended:false}));
 //?what is this for?
 app.use(methodOverride('_method'));
 
+//after require is the path
+const Flight = require('./models/Flight')
+
 
 //connect Mongoose
 mongoose.connect(process.env.MONGO_URI, {
@@ -44,7 +47,7 @@ app.get('/flightinfo' , (req, res) => {
   })
 })
 
-//New
+//New , a form, that makes a post request and put it into an index
 app.get('/flights/new', ( req, res ) => {
   res.render('New');
 });
@@ -53,7 +56,27 @@ app.get('/flights/new', ( req, res ) => {
 
 //Update
 
-//Create
+//Create aka POST
+//this connects to post bc this is the only post AND it has the same route as what is on the new 
+app.post('/flightinfo' , (req, res) => {
+  //req.body is just requesting all the requested values of the form that we are referring to. and then adding FlightNo, refers just that one item named on that form. 
+  console.log(req.body)
+  //random number: if this info named flightNo on the new.jsx. if flightNo is true (if it exists) and its requested, the
+  if(req.body.flightNo){
+    const randomFlightNo = Math.floor(Math.random() * 10000);
+    res.body.flightNo = randomFlightNo 
+  }
+      //the create is what adds the gathered info into the index or database
+  Flight.create(req.body)
+    .then(() => {
+    //after adding information, "redirecting" what the users sees to another page
+      res.redirect('/flightinfo')
+    })
+    .catch(error => {
+      console.error(error)
+    })
+  });
+
 
 //Edit
 

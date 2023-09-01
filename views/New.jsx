@@ -14,6 +14,7 @@ const New = () => {
               <option value="united">United</option> <br/>
               </select>
             Flight Number: <input type="number" name="flightNo" /><br/>
+            Departs: <input type='datetime-local' name='departs'></input><br/>
             <input type="submit" name="" value="Add Flight" />
           </form>
       </div>

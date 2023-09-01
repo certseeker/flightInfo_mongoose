@@ -9,7 +9,7 @@ const flightInfoSchema = new mongoose.Schema({
 })
 
 //applies this schema to the Flight(.js: name of file) model
-const Flight = model('Flight' , flightInfoSchema)
+const Flight = mongoose.model('Flight' , flightInfoSchema)
 
 module.exports = Flight;
 
