@@ -1,6 +1,8 @@
-const { Schema, model, default: mongoose } = require("mongoose")
+const mongoose = require("mongoose")
 
 const flightInfoSchema = new mongoose.Schema({
+
+  //enum is the only options they can pick
   airline: {type: String, enum: ['American' , 'Southwest' , 'United'] , required: true},
   flightNo: { type: Number, min: 10, max: 9999 },
   departs: {type: Date, default: () => new Date(Date().getFullYear() + 1, 0, 1 )},
@@ -9,7 +11,7 @@ const flightInfoSchema = new mongoose.Schema({
 //applies this schema to the Flight(.js: name of file) model
 const Flight = model('Flight' , flightInfoSchema)
 
-model.exports = Flight;
+module.exports = Flight;
 
 
 // departs: { type: Date, default: () => new Date(new Date().getFullYear() + 1, 0, 1) },

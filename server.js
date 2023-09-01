@@ -1,10 +1,21 @@
+require('dotenv').config();
 const express = require("express");
 const app = express();
-//!this allows express/node to read the jsx files, if you don't this and have jsx, it will cause and error and not render page
+//Process jsx
 app.set('view engine', "jsx");
-
-//!DO NOT FORGET to put the () after createEngine !!!
 app.engine('jsx' , require('express-react-views').createEngine());
+const methodOverride = require('method-override');
+
+const mongoose = require('mongoose');
+
+//?what does this do?
+const MONGO_URI = process.env.MONGO_URI;
+
+//app can convert input into json
+app.use(express.urlencoded({extended:false}));
+
+//?what is this for?
+app.use(methodOverride('_method'));
 
 
 //connect Mongoose
@@ -14,13 +25,50 @@ mongoose.connect(process.env.MONGO_URI, {
 })
 
 
-// INDECES
+// INDUCES
 
 app.get("/" , (req , res) => {
   res.send("<h1>Flight Information</h1>")
 })
 
+//*Index
+app.get('/flightinfo' , (req, res) => {
+  Flight.find({})
+  .then((allFlights) => {
+    res.render('Index', {
+      flight: allFlights
+    })
+  })
+  .catch(error => {
+    console.error(error)
+  })
+})
 
+//New
+app.get('/flights/new', ( req, res ) => {
+  res.render('New');
+});
+
+//Delete
+
+//Update
+
+//Create
+
+//Edit
+
+//Show
+app.get('flight/show/id' , (req,res) => {
+  Flight.findOne({ _id: req.params.id })
+  .then((foundFlight) => {
+    res.render('Show' , {
+      flight: foundFlight
+    })
+  })
+  .catch(error => {
+    console.error(error)
+  })
+})
 
 app.listen(3000, () => {
   console.log("Listening on Port 3000")
